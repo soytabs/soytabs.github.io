@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ética en Colores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --color-primario: #603903;
+            --color-secundario: #9e6a6a;
+            --color-fondo: #f4dec7;
+            --degradado-menu: linear-gradient(135deg, rgba(158,106,106,0.95) 0%, rgba(141, 93, 26, 0.95) 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--color-fondo);
+            color: #4a4a4a;
+            padding-top: 100px; /* Reducido para móviles */
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .menu-icon {
+            position: fixed;
+            top: 20px; /* Ajustado para móviles */
+            left: 20px; /* Ajustado para móviles */
+            font-size: 22px; /* Reducido para móviles */
+            cursor: pointer;
+            color: var(--color-primario);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 14px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            z-index: 10900000;
+            transition: all 0.3s ease; /* Corregido el tiempo */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 85%; /* Adaptativo para móviles */
+            max-width: 280px; /* Máximo ancho */
+            height: 100%;
+            background: var(--degradado-menu);
+            backdrop-filter: blur(15px);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Más rápido */
+            padding-top: 80px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0 15px; /* Reducido para móviles */
+        }
+
+        .sidebar ul li {
+            padding: 12px 20px; /* Reducido para móviles */
+            margin: 8px 0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .sidebar ul li:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(8px); /* Movimiento más sutil */
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Reducido para móviles */
+            font-size: 1em; /* Reducido para móviles */
+        }
+        
+        .container {
+            max-width: 95%; /* Más ancho en móviles */
+            margin: 0 auto;
+            padding: 1.5rem; /* Reducido para móviles */
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem; /* Reducido para móviles */
+            background: rgba(255,255,255,0.9);
+            border-radius: 18px; /* Reducido para móviles */
+            margin-bottom: 1.5rem; /* Reducido para móviles */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* Sombra más sutil */
+        }
+
+        h1 {
+            color: var(--color-primario);
+            font-size: 2rem; /* Reducido para móviles */
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px; /* Reducido para móviles */
+        }
+
+        h1::after {
+            content: "🌸";
+            position: absolute;
+            right: -30px; /* Ajustado para móviles */
+            top: -10px; /* Ajustado para móviles */
+            font-size: 1.5rem; /* Reducido para móviles */
+        }
+
+        .content {
+            background: rgba(255,255,255,0.85);
+            padding: 1.8rem; /* Reducido para móviles */
+            border-radius: 18px; /* Reducido para móviles */
+        }
+
+        #quoteDisplay {
+            font-size: 1.1rem; /* Reducido para móviles */
+            line-height: 1.6; /* Mejor espaciado para móviles */
+            margin: 1.5rem 0; /* Reducido para móviles */
+            padding: 1.5rem; /* Reducido para móviles */
+            min-height: 100px; /* Reducido para móviles */
+        }
+button {
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(96,57,3,0.2);
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.3),
+                transparent
+            );
+            transition: 0.6s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(158,106,106,0.3);
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        .ethics-section h2 {
+            color: var(--color-primario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 0.75rem;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Media queries para pantallas grandes */
+        @media (min-width: 768px) {
+            body {
+                padding-top: 150px;
+            }
+            .container {
+                max-width: 800px;
+                padding: 2rem;
+            }
+            h1 {
+                font-size: 2.8rem;
+            }
+            .sidebar {
+                width: 280px;
+            }
+            button {
+                width: auto;
+                display: inline-block;
+            }
+        }
+
+        /* Tus estilos personalizados del menú (se mantienen igual) */
+        .menu-icon {
+            padding: 15px 18px !important; 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+        .menu-icon:hover {
+            transform: scale(1.15) !important;
+            box-shadow: 0 10px 30px rgba(96, 57, 3, 0.25) !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+        }
+        .menu-icon i {
+            display: inline-block; 
+            transition: transform 0.4s ease !important;
+        }
+        .menu-icon:hover i {
+            transform: scale(1.1) !important;
+        }
+        .menu-icon:active {
+            transform: scale(0.97) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-icon" id="menuButton">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="inicio.html"><i class="fas fa-home fa-fw"></i>inicio</a></li>
+            <li><a href="objetivo.html"><i class="fas fa-hands-helping fa-fw"></i>para que hicimos esta pagina?</a></li>
+            <li><a href="evidencia.html"><i class="fas fa-comment-dots fa-fw"></i>evidencia de nuestro trabajo</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Para Que Hicimos Esta Pagina?</h1>
+        </header>
+
+        <div class="content">
+            <div class="ethics-section">
+            <P>La presente página web fue creada como parte de un proyecto escolar de ética. Su objetivo principal es ofrecer un generador de frases éticas que inspire a los usuarios a reflexionar sobre sus decisiones y comportamientos cotidianos. El diseño sencillo y amigable busca facilitar la comprensión de la ética como una guía fundamental en la vida.A través de frases cuidadosamente seleccionadas, la página invita a pensar sobre valores como la honestidad, la responsabilidad y el respeto. Este recurso digital busca ser una herramienta educativa que combine tecnología y reflexión ética de forma accesible para todos.</P>
+        </div>
+    </div>
+
+    <script>
+        // Menú Hamburguesa SIN ROTACIÓN
+        const menuButton = document.getElementById('menuButton');
+        menuButton.addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+        function generarFrase() {
+            const display = document.getElementById('quoteDisplay');
+            display.style.opacity = '0';
+            display.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                const frase = frases[Math.floor(Math.random() * frases.length)];
+                display.innerHTML = `"${frase.texto}"`; // Corregido las comillas
+                display.style.opacity = '1';
+                display.style.transform = 'translateY(0)';
+            }, 300); // Animación más rápida
+        }
+    </script>
+</body>
+</html>

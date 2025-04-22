@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ética en Colores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --color-primario: #603903;
+            --color-secundario: #9e6a6a;
+            --color-fondo: #f4dec7;
+            --degradado-menu: linear-gradient(135deg, rgba(158,106,106,0.95) 0%, rgba(141, 93, 26, 0.95) 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--color-fondo);
+            color: #4a4a4a;
+            padding-top: 100px; /* Reducido para móviles */
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .menu-icon {
+            position: fixed;
+            top: 20px; /* Ajustado para móviles */
+            left: 20px; /* Ajustado para móviles */
+            font-size: 22px; /* Reducido para móviles */
+            cursor: pointer;
+            color: var(--color-primario);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 14px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            z-index: 10900000;
+            transition: all 0.3s ease; /* Corregido el tiempo */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 85%; /* Adaptativo para móviles */
+            max-width: 280px; /* Máximo ancho */
+            height: 100%;
+            background: var(--degradado-menu);
+            backdrop-filter: blur(15px);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Más rápido */
+            padding-top: 80px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0 15px; /* Reducido para móviles */
+        }
+
+        .sidebar ul li {
+            padding: 12px 20px; /* Reducido para móviles */
+            margin: 8px 0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .sidebar ul li:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(8px); /* Movimiento más sutil */
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Reducido para móviles */
+            font-size: 1em; /* Reducido para móviles */
+        }
+        
+        .container {
+            max-width: 95%; /* Más ancho en móviles */
+            margin: 0 auto;
+            padding: 1.5rem; /* Reducido para móviles */
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem; /* Reducido para móviles */
+            background: rgba(255,255,255,0.9);
+            border-radius: 18px; /* Reducido para móviles */
+            margin-bottom: 1.5rem; /* Reducido para móviles */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* Sombra más sutil */
+        }
+
+        h1 {
+            color: var(--color-primario);
+            font-size: 2rem; /* Reducido para móviles */
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px; /* Reducido para móviles */
+        }
+
+        h1::after {
+            content: "🌸";
+            position: absolute;
+            right: -30px; /* Ajustado para móviles */
+            top: -10px; /* Ajustado para móviles */
+            font-size: 1.5rem; /* Reducido para móviles */
+        }
+
+        .content {
+            background: rgba(255,255,255,0.85);
+            padding: 1.8rem; /* Reducido para móviles */
+            border-radius: 18px; /* Reducido para móviles */
+        }
+
+        #quoteDisplay {
+            font-size: 1.1rem; /* Reducido para móviles */
+            line-height: 1.6; /* Mejor espaciado para móviles */
+            margin: 1.5rem 0; /* Reducido para móviles */
+            padding: 1.5rem; /* Reducido para móviles */
+            min-height: 100px; /* Reducido para móviles */
+        }
+button {
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(96,57,3,0.2);
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.3),
+                transparent
+            );
+            transition: 0.6s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(158,106,106,0.3);
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        .ethics-section h2 {
+            color: var(--color-primario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 0.75rem;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+}
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+}
+
+        /* Media queries para pantallas grandes */
+        @media (min-width: 768px) {
+            body {
+                padding-top: 150px;
+            }
+            .container {
+                max-width: 800px;
+                padding: 2rem;
+            }
+            h1 {
+                font-size: 2.8rem;
+            }
+            .sidebar {
+                width: 280px;
+            }
+            button {
+                width: auto;
+                display: inline-block;
+            }
+
+        /* Tus estilos personalizados del menú (se mantienen igual) */
+        .menu-icon {
+            padding: 15px 18px !important; 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+        .menu-icon:hover {
+            transform: scale(1.15) !important;
+            box-shadow: 0 10px 30px rgba(96, 57, 3, 0.25) !important;
+            background: rgba(255, 255, 255, 0.98) !important;
+        }
+        .menu-icon i {
+            display: inline-block; 
+            transition: transform 0.4s ease !important;
+        }
+        .menu-icon:hover i {
+            transform: scale(1.1) !important;
+        }
+        .menu-icon:active {
+            transform: scale(0.97) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-icon" id="menuButton">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="inicio.html"><i class="fas fa-home fa-fw"></i>inicio</a></li>
+            <li><a href="objetivo.html"><i class="fas fa-hands-helping fa-fw"></i>para que hicimos esta pagina?</a></li>
+            <li><a href="evidencia.html"><i class="fas fa-comment-dots fa-fw"></i>evidencia de nuestro trabajo</a></li>
+            
+        </ul>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Proyecto De Etica</h1>
+        </header>
+
+        <div class="content">
+            <div class="ethics-section">
+                <h2><i class="fas fa-seedling"></i>Generador de frases</h2>
+                <p>En un mundo de sombras y luces, la ética es el faro que guía nuestro camino hacia decisiones auténticas y acciones con propósito.</p>
+            </div>
+
+            <div class="quote-generator">
+                <h2><i class="fas fa-feather-alt"></i> Generador de Inspiración</h2>
+                <div id="quoteDisplay">aqui saldra la frase</div>
+                <button onclick="generarFrase()">
+                    <i class="fas fa-redo"></i> Click para generar frase
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menú Hamburguesa SIN ROTACIÓN
+        const menuButton = document.getElementById('menuButton');
+        menuButton.addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Generador de Frases
+        const frases = [ 
+            { texto: "Haz lo correcto, aunque nadie te mire, porque tu conciencia siempre te sigue." }
+            ,
+            { texto: "Haz lo correcto, aunque nadie te mire, porque tu conciencia siempre te sigue." },
+{ texto: "La ética es hacer lo correcto, incluso cuando hacerlo no es lo más fácil." },
+{ texto: "Tu integridad vale más que cualquier recompensa momentánea." },
+{ texto: "Ser ético es elegir el bien, incluso cuando podrías elegir lo fácil." },
+{ texto: "Actuar con ética es respetarte a ti mismo y a los demás." },
+{ texto: "Los valores no se negocian." },
+{ texto: "El respeto es la base de toda convivencia ética." },
+{ texto: "Una buena acción siempre deja huella, aunque sea invisible." },
+{ texto: "Sé el ejemplo que esperas de los demás." },
+{ texto: "La ética se demuestra con hechos, no con palabras." },
+{ texto: "Decir la verdad es un acto de valentía." },
+{ texto: "El bien común debe estar por encima del beneficio personal." },
+{ texto: "Ser ético es hacer lo correcto, incluso si nadie lo reconoce." },
+{ texto: "Tu carácter se forma con tus decisiones éticas." },
+{ texto: "Una conciencia tranquila es el mejor descanso." },
+{ texto: "La empatía es parte fundamental de la ética." },
+{ texto: "No hay justificación para la deshonestidad." },
+{ texto: "La ética empieza en los pequeños actos del día a día." },
+{ texto: "Haz el bien, sin mirar a quién." },
+{ texto: "La ética se enseña con el ejemplo." },
+{ texto: "Hacer trampa es robarte a ti mismo la oportunidad de crecer." },
+{ texto: "El respeto a la diferencia es un acto ético." },
+{ texto: "Un mundo mejor comienza con decisiones éticas." },
+{ texto: "La ética es el arte de vivir bien con los demás." },
+{ texto: "No hay excusa válida para faltar a tus valores." },
+{ texto: "La justicia empieza por uno mismo." },
+{ texto: "El que actúa con ética, duerme en paz." },
+{ texto: "No hagas a otros lo que no quieres que te hagan." },
+{ texto: "Tus principios son tu brújula en tiempos de duda." },
+{ texto: "La ética es la base de la confianza." },
+{ texto: "Ser justo es ser ético." },
+{ texto: "El poder sin ética es peligroso." },
+{ texto: "El respeto es el primer paso hacia una sociedad ética." },
+{ texto: "Ser leal es un acto de ética." },
+{ texto: "Cumplir tu palabra es un acto ético." },
+{ texto: "La ética es el valor que sostiene a todos los demás." },
+{ texto: "No necesitas reglas para saber lo que está bien." },
+{ texto: "La ética no se impone, se vive." },
+{ texto: "Sin ética, no hay verdadera libertad." },
+{ texto: "La verdad puede doler, pero la mentira destruye." },
+{ texto: "El ejemplo ético vale más que mil palabras." },
+{ texto: "La dignidad comienza con el respeto propio." },
+{ texto: "El fin nunca justifica los medios, si los medios no son éticos." },
+{ texto: "La ética es el lenguaje universal del bien." },
+{ texto: "Tu comportamiento define tu ética." },
+{ texto: "El bien siempre encuentra su camino." },
+{ texto: "La corrupción empieza cuando se olvida la ética." },
+{ texto: "Ser diferente no es malo, discriminar sí lo es." },
+{ texto: "La ética te guía cuando nadie te ve." },
+{ texto: "Cada elección revela quién eres realmente." },
+{ texto: "El que no tiene ética, lo pierde todo aunque lo tenga todo." },
+{ texto: "Las acciones éticas construyen un mejor futuro." },
+{ texto: "Una decisión ética puede cambiar el mundo." },
+{ texto: "Donde hay ética, hay esperanza." },
+{ texto: "Ser ético es ser coherente contigo mismo." },
+{ texto: "La ética nos hace más humanos." },
+{ texto: "Cuando actúas con ética, inspiras a otros." },
+{ texto: "La bondad es parte esencial de la ética." },
+{ texto: "La corrupción destruye lo que la ética construye." },
+{ texto: "Ser honesto no te hace débil, te hace valiente." },
+{ texto: "La ética florece donde hay educación y respeto." },
+{ texto: "Nada justifica una mala acción." },
+{ texto: "La ética no se ve, pero se siente." },
+{ texto: "Un corazón ético no traiciona." },
+{ texto: "La ética empieza en casa." },
+{ texto: "El respeto al otro es el reflejo de tu ética." },
+{ texto: "Las pequeñas decisiones éticas construyen una gran vida." },
+{ texto: "Ser responsable también es ser ético." },
+{ texto: "La ética y la felicidad van de la mano." },
+{ texto: "Quien actúa con ética, no necesita defensa." },
+{ texto: "La ética se demuestra, no se presume." },
+{ texto: "El silencio ante la injusticia también es una falta ética." },
+{ texto: "Ayudar sin esperar nada a cambio es profundamente ético." },
+{ texto: "La integridad es ser honesto incluso en lo más mínimo." },
+{ texto: "Ser justo es más importante que tener razón." },
+{ texto: "La ética se prueba cuando nadie te vigila." },
+{ texto: "El respeto a las reglas nace del respeto a los demás." },
+{ texto: "La ética no es un lujo, es una necesidad." },
+{ texto: "Quien obra con ética, nunca se arrepiente." },
+{ texto: "El valor de la ética supera al del oro." },
+{ texto: "La ética empieza con una pregunta: ¿Es lo correcto?" },
+{ texto: "Haz lo que es correcto, no lo que es popular." },
+{ texto: "La ética te hace libre de verdad." },
+{ texto: "Ser ético es pensar más allá de ti mismo." },
+{ texto: "La ética comienza con la verdad." },
+{ texto: "No hay acto ético sin respeto al otro." },
+{ texto: "El mundo necesita más ética y menos excusas." },
+{ texto: "Actuar con ética es sembrar confianza." },
+{ texto: "La ética transforma las sociedades." },
+{ texto: "Un líder ético crea un mundo más justo." },
+{ texto: "La ética no se adapta, se defiende." },
+{ texto: "El respeto, la honestidad y la justicia son pilares éticos." },
+{ texto: "Cada acción ética tiene un impacto positivo." },
+{ texto: "La ética te hace brillar sin apagar a nadie." },
+{ texto: "La mayor riqueza es una vida íntegra." },
+{ texto: "La ética no se ve en lo que dices, sino en lo que haces." },
+{ texto: "Vivir con ética es vivir en paz." },
+{ texto: "Ser honesto es un acto revolucionario." },
+{ texto: "La ética es el alma de una buena sociedad." },
+
+
+        ];
+        
+        function generarFrase() {
+            const display = document.getElementById('quoteDisplay');
+            display.style.opacity = '0';
+            display.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                const frase = frases[Math.floor(Math.random() * frases.length)];
+                display.innerHTML = `"${frase.texto}"`; // Corregido las comillas
+                display.style.opacity = '1';
+                display.style.transform = 'translateY(0)';
+            }, 300); // Animación más rápida
+        }
+    </script>
+</body>
+</html>
